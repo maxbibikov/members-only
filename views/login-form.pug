@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    h3 Login
+    if errors
+        for error in errors
+            p=error.msg
+    form(action="" method="post")
+        div
+            input#username(type="text" name="username" required value=username || '')
+            label(for="username") Username / Email
+        div
+            input#password(type="password" name="password" required)
+            label(for="password") Password
+        div
+            button(type="submit") Submit

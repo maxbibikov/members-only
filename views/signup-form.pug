@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h3 Sign Up
+    if errors
+        for error in errors
+            p=error.msg
+    form(action="" method="POST")
+        div
+            input#username(type="text" name="username" required value=username || '')
+            label(for="username") Username / Email
+        div
+            input#password(type="password" name="password" required)
+            label(for="password" type="password") Password
+        div
+            input#password_confirm(type="password" name="password_confirm" required)
+            label(for="password_confirm" type="password") Confirm password
+        div
+            input#fullname(type="text" name="fullname" required value=fullname || '')
+            label(for="fullname") Full Name
+        div
+            button(type="submit") Submit
