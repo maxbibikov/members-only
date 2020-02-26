@@ -59,3 +59,16 @@ exports.add_message = [
       .catch((err) => next(err));
   },
 ];
+
+exports.delete_message = (req, res, next) => {
+  const messageID = req.params.id;
+
+  if (!messageID) {
+    const messageIDError = new Error('Parameter message id not found');
+    return next(messageIDError);
+  }
+  return Message.findOneAndRemove({ _id: messageID })
+    .exec()
+    .then(() => res.redirect('/'))
+    .catch((err) => next(err));
+};

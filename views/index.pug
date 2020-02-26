@@ -7,7 +7,8 @@ block content
       strong=user.fullname
     nav
       div
-        a(href="/membership") Membership
+        p If you want to check your membership status >
+          a(href="/membership") Membership
       div
         a(href="/log-out") Logout
     div
@@ -39,4 +40,6 @@ block content
         p=new Date(message.date)
       if message.user
         p=message.user.username
-    br
+      if user && user.role === 'admin'
+        a(href=`${message.url}/delete`) ⚠️Delete message
+    hr

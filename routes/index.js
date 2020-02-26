@@ -11,6 +11,7 @@ router.use((req, res, next) => {
 /* GET home page. */
 router.get('/', messageController.message_board_get);
 router.post('/send-message', messageController.add_message);
+router.get('/message/:id/delete', messageController.delete_message);
 
 router.get('/sign-up', userController.user_signup_get);
 router.post('/sign-up', userController.user_signup_post);

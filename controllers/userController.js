@@ -28,7 +28,7 @@ exports.user_signup_post = [
     .notEmpty()
     .withMessage('Should not be empty')
     .isLength({ min: 8 })
-    .withMessage('Must be at least 8 characters long')
+    .withMessage('Password must be at least 8 characters long')
     .not()
     .isIn(['12345678', '01234567', 'password123', 'qwertyui', '111111111'])
     .withMessage('Your password is too easy to guess')
@@ -47,7 +47,7 @@ exports.user_signup_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-    const { fullname, username, password } = req.body;
+    const { fullname, username, password, admin } = req.body;
 
     if (!errors.isEmpty()) {
       return res.render('signup-form', {
@@ -68,6 +68,7 @@ exports.user_signup_post = [
               fullname,
               username,
               password: hashedPass,
+              role: admin ? 'admin' : 'user',
             });
 
             return user

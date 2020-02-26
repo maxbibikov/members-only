@@ -58,16 +58,11 @@ passport.serializeUser((user, done) => {
   return done(null, user.id);
 });
 passport.deserializeUser((id, done) => {
-  return User.findOne({ _id: id })
-    .then(({ username, _id, fullname, membership_end, activeMember }) =>
-      done(null, {
-        username,
-        id: _id,
-        fullname,
-        membership_end,
-        activeMember,
-      })
-    )
+  return User.findOne(
+    { _id: id },
+    'username _id fullname membership_end activeMember role'
+  )
+    .then((user) => done(null, user))
     .catch((err) => done(err));
 });
 
