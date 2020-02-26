@@ -59,11 +59,13 @@ passport.serializeUser((user, done) => {
 });
 passport.deserializeUser((id, done) => {
   return User.findOne({ _id: id })
-    .then((user) =>
+    .then(({ username, _id, fullname, membership_end, activeMember }) =>
       done(null, {
-        username: user.username,
-        id: user._id,
-        fullname: user.fullname,
+        username,
+        id: _id,
+        fullname,
+        membership_end,
+        activeMember,
       })
     )
     .catch((err) => done(err));

@@ -5,7 +5,8 @@ const passport = require('passport');
 // Models
 const User = require('../models/user.js');
 
-exports.user_signup_get = (req, res) => res.render('signup-form');
+exports.user_signup_get = (req, res) =>
+  res.render('signup-form', { title: 'SignUp' });
 exports.user_signup_post = [
   check('fullname')
     .notEmpty()
@@ -50,6 +51,7 @@ exports.user_signup_post = [
 
     if (!errors.isEmpty()) {
       return res.render('signup-form', {
+        title: 'SignUp',
         fullname,
         username,
         errors: errors.array(),
@@ -81,7 +83,8 @@ exports.user_signup_post = [
   },
 ];
 
-exports.user_login_get = (req, res) => res.render('login-form');
+exports.user_login_get = (req, res) =>
+  res.render('login-form', { title: 'Login' });
 exports.user_login_post = [
   check('username', 'Username is not valid')
     .notEmpty()
@@ -99,6 +102,7 @@ exports.user_login_post = [
 
     if (!errors.isEmpty()) {
       return res.render('login-form', {
+        title: 'Login',
         errors: errors.array(),
         username,
       });
@@ -109,7 +113,10 @@ exports.user_login_post = [
       }
 
       if (!user) {
-        return res.render('login-form', { errors: [{ msg: info.message }] });
+        return res.render('login-form', {
+          title: 'Login',
+          errors: [{ msg: info.message }],
+        });
       }
 
       req.login(user, (err) => {
@@ -127,3 +134,39 @@ exports.user_logout_get = (req, res) => {
   req.logout();
   res.redirect('/');
 };
+
+exports.membership_get = (req, res) =>
+  res.render('membership', { title: 'Membership' });
+exports.membership_post = [
+  check('secret_string', 'Secret string is not valid')
+    .notEmpty()
+    .isString()
+    .equals('secret string')
+    .withMessage('Wrong answer. Try again 👻'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const { secret_string } = req.body;
+
+    if (!errors.isEmpty()) {
+      return res.render('membership', {
+        title: 'Membership',
+        secret_string,
+        errors: errors.array(),
+      });
+    }
+    const currentDate = new Date();
+    currentDate.setUTCDate(currentDate.getUTCDate() + 30);
+
+    return User.findOneAndUpdate(
+      { _id: req.user.id },
+      {
+        membership_end: currentDate.toUTCString(),
+      }
+    )
+      .exec()
+      .then((updatedUser) => {
+        return res.redirect('/membership');
+      })
+      .catch((err) => next(err));
+  },
+];

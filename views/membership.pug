@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    if user
+        h3 Hi
+        p=user.fullname
+        div
+        p Your membership valid untill: 
+            strong=new Date(user.membership_end).toDateString()
+
+        if !user.activeMember
+            p Your membership ended: 
+                strong=new Date(user.membership_end).toDateString()
+            h3 Become a member of our VIP club
+            if errors
+                for error in errors
+                    p=error.msg
+            form(action="" method="post")
+                input#secret_string(type="password" name="secret_string" value=secret_string required)
+                label(for="secret_string") Enter secret string to become a member
+                div
+                    button(type="submit") Become a member

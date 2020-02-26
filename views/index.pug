@@ -6,7 +6,10 @@ block content
     p Hi 
       strong=user.fullname
     nav
-      a(href="/log-out") Logout
+      div
+        a(href="/membership") Membership
+      div
+        a(href="/log-out") Logout
   else
     p Welcome to #{title}
     nav
