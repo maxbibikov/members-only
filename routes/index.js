@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const messageController = require('../controllers/messageController');
 
 router.use((req, res, next) => {
   res.locals.user = req.user;
@@ -8,9 +9,8 @@ router.use((req, res, next) => {
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Club House', user: req.user });
-});
+router.get('/', messageController.message_board_get);
+router.post('/send-message', messageController.add_message);
 
 router.get('/sign-up', userController.user_signup_get);
 router.post('/sign-up', userController.user_signup_post);

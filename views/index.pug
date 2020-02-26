@@ -10,6 +10,18 @@ block content
         a(href="/membership") Membership
       div
         a(href="/log-out") Logout
+    div
+      h3 New message
+      form(action="/send-message" method="post")
+        div
+          input#title(type="text" name="title")
+          label(for="title") Title
+        div
+          textarea#text(type="text" name="text")
+          label(for="text") Message
+        div
+          button(type="submit") Send
+
   else
     p Welcome to #{title}
     nav
@@ -18,3 +30,13 @@ block content
     nav
       p Want to become our user? 
         a(href="/sign-up") Register
+  h2 Message board
+  for message in messages
+    div
+      h3=message.title
+      p=message.text
+      if message.date
+        p=new Date(message.date)
+      if message.user
+        p=message.user.username
+    br
