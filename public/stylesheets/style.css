@@ -1,8 +1,43 @@
+html,
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  font: 14px 'Poppins', 'Lucida Grande', Helvetica, Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  width: 100%;
 }
 
-a {
-  color: #00B7FF;
+
+.mdc-drawer-app-content {
+  flex: auto;
+  overflow: auto;
+  position: relative;
 }
+
+.main-content {
+  overflow: auto;
+  height: 100%;
+  padding: 0 3em;
+}
+
+.app-bar {
+  position: absolute;
+}
+
+.message-textarea {
+  margin-top: 1em;
+}
+
+.message-card {
+  margin: 1em 0;
+  min-width: 250px;
+}
+
+.message-card:last-child {
+  margin-bottom: 3em;
+}
+
+.message-card__content{
+  padding: 0 1em;
+}
+

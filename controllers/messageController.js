@@ -4,8 +4,9 @@ const { check, validationResult } = require('express-validator');
 const Message = require('../models/message');
 
 exports.message_board_get = (req, res, next) => {
-  if (req.user && req.user.activeMember) {
+  if (req.user && (req.user.activeMember || req.user.role === 'admin')) {
     return Message.find({}, 'title text user date')
+      .sort('-date')
       .populate('user', 'username')
       .exec()
       .then((messages) => {
@@ -14,6 +15,7 @@ exports.message_board_get = (req, res, next) => {
       .catch((err) => next(err));
   }
   return Message.find({}, 'title text')
+    .sort('-date')
     .exec()
     .then((messages) => {
       return res.render('index', { title: 'Club House', messages });
@@ -28,22 +30,32 @@ exports.add_message = [
     .isString()
     .isLength({ min: 3, max: 30 })
     .withMessage('Title length should be between 3 and 30 characters')
-    .trim()
-    .escape(),
+    .trim(),
   check('text')
     .notEmpty()
     .withMessage('Message is required')
     .isString()
     .isLength({ min: 2, max: 300 })
     .withMessage('Message length should be between 2 and 300 characters')
-    .trim()
-    .escape(),
+    .trim(),
   (req, res, next) => {
     const errors = validationResult(req);
     const { title, text } = req.body;
 
     if (!errors.isEmpty()) {
-      return res.render('/', { title: 'Club House', title, text });
+      return Message.find({})
+        .sort('-date')
+        .exec()
+        .then((messages) => {
+          return res.render('index', {
+            title: 'Club House',
+            title,
+            text,
+            messages,
+            errors: errors.array(),
+          });
+        })
+        .catch((err) => next(err));
     }
 
     const message = new Message({

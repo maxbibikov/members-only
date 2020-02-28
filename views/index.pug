@@ -1,45 +1,50 @@
 extends layout
 
 block content
-  h1= title
-  if user
-    p Hi 
-      strong=user.fullname
-    nav
-      div
-        p If you want to check your membership status >
-          a(href="/membership") Membership
-      div
-        a(href="/log-out") Logout
-    div
-      h3 New message
-      form(action="/send-message" method="post")
-        div
-          input#title(type="text" name="title")
-          label(for="title") Title
-        div
-          textarea#text(type="text" name="text")
-          label(for="text") Message
-        div
-          button(type="submit") Send
+  if !user
+    h3
+      a(href='/sign-up') Register
+      | &nbsp or 
+      a(href='/log-in') Login
+      | &nbsp to create new messages
 
-  else
-    p Welcome to #{title}
-    nav
-      p Already our user? 
-        a(href="/log-in") Login
-    nav
-      p Want to become our user? 
-        a(href="/sign-up") Register
   h2 Message board
+  if user
+    button#message_btn.mdc-button.mdc-button--raised
+      i.material-icons.mdc-button__icon message
+      span.mdc-button__label New Message
+      .mdc-button__ripple
+  if errors
+    for error in errors
+      p=error.msg
   for message in messages
-    div
-      h3=message.title
-      p=message.text
-      if message.date
-        p=new Date(message.date)
-      if message.user
-        p=message.user.username
+    .mdc-card.message-card
+      .mdc-card__primary-action
+        .message-card__content
+          if message.user && message.date
+            p #[strong #{message.user.username} ] (#{new Date(message.date).toLocaleString()})
+          h3=message.title
+          p.mdc-typography--body1=message.text
       if user && user.role === 'admin'
-        a(href=`${message.url}/delete`) ⚠️Delete message
-    hr
+        .mdc-card__actions
+          a.mdc-button.mdc-button--outlined.mdc-card__action(href=`${message.url}/delete` aria-pressed="false" aria-label="Delete")
+            //- i.material-icons.mdc-button__icon delete
+            span.mdc-button__label Delete
+            .mdc-button__ripple
+  if !user
+    .mdc-snackbar
+      .mdc-snackbar__surface
+        .mdc-snackbar__label(role="status" aria-live="polite")
+          a(href='/sign-up') Login or Register to create new messages
+        .mdc-snackbar__actions
+          a.mdc-button.mdc-snackbar__action(href="/log-in")
+            .mdc-button__ripple
+            span.mdc-button__label Login
+
+          a.mdc-button.mdc-snackbar__action(href="/sign-up")
+            .mdc-button__ripple
+            span.mdc-button__label Register
+
+
+block script
+  script(src="/javascripts/index.js")

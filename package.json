@@ -8,9 +8,6 @@
     "debug": "DEBUG=members-only npm run devstart"
   },
   "dependencies": {
-    "@material/button": "^5.0.0",
-    "@material/ripple": "^5.0.0",
-    "@material/textfield": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "~1.4.4",

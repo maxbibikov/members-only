@@ -2,7 +2,82 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href='https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css' rel='stylesheet' )
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    link(href='/stylesheets/style.css' rel='stylesheet' )
+    link(href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
   body
-    a(href="/") Home
-    block content
+    //- Main navigation drawer
+    aside.mdc-drawer.mdc-drawer--dismissible
+      .mdc-drawer__content
+        nav#main_nav_list.mdc-list
+          a#main_nav_home.mdc-list-item(href='/' aria-current='page')
+            i.mdc-list-item__graphic.material-icons(aria-hidden="true") home
+            span.mdc-list-item__text Club House
+          if user
+            a#main_nav_membership.mdc-list-item(href='/membership' aria-current='page')
+              i.mdc-list-item__graphic.material-icons(aria-hidden="true") credit_card
+              span.mdc-list-item__text Membership
+            hr.mdc-list-divider
+            h6.mdc-list-group__subheader Account
+            #main_nav_membership.mdc-list-item(href='/membership' aria-current='page')
+              i.mdc-list-item__graphic.material-icons(aria-hidden="true") perm_identity
+              span.mdc-list-item__text=user.fullname
+            a#main_nav_logout.mdc-list-item(href='/log-out' aria-current='page')
+              i.mdc-list-item__graphic.material-icons(aria-hidden="true") exit_to_app
+              span.mdc-list-item__text Logout
+          else
+            hr.mdc-list-divider
+            h6.mdc-list-group__subheader Account
+            a#main_nav_login.mdc-list-item(href='/log-in' aria-current='page')
+              i.mdc-list-item__graphic.material-icons(aria-hidden="true") face
+              span.mdc-list-item__text Login
+            a#main_nav_register.mdc-list-item(href='/sign-up' aria-current='page')
+              i.mdc-list-item__graphic.material-icons(aria-hidden="true") logout
+              span.mdc-list-item__text Register
+
+    //- Main content (jumps to the side when main navigation opens)
+    main.mdc-drawer-app-content
+      //- Top app bar
+      header.mdc-top-app-bar.mdc-top-app-bar--fixed.app-bar
+        .mdc-top-app-bar__row
+          section.mdc-top-app-bar__section.mdc-top-app-bar__section--align-start
+            button#menu_btn.mdc-top-app-bar__navigation-icon.mdc-icon-button.material-icons menu
+            span.mdc-top-app-bar__title
+              strong=title
+          section.mdc-top-app-bar__section.mdc-top-app-bar__section--align-end
+      //- Main content
+      main.main-content#main_content
+        .mdc-top-app-bar--fixed-adjust
+          block content
+      //- Message dialog
+    form(action="/send-message" method="post")
+      .mdc-dialog
+        .mdc-dialog__container
+          .mdc-dialog__surface(role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content")
+            h2.mdc-dialog__title New Message
+            .mdc-dialog__content
+              label#message_title.mdc-text-field.mdc-text-field--fullwidth
+                .mdc-text-field__ripple
+                input.mdc-text-field__input(type="text" aria-labelledby="my-label-id" placeholder="Title" name="title")
+                .mdc-line-ripple
+              label#message_text.mdc-text-field.mdc-text-field--fullwidth.mdc-text-field--textarea.message-textarea
+                textarea.mdc-text-field__input(rows="5" cols="20" aria-labelledby="my-label-id" name="text")
+                .mdc-notched-outline
+                  .mdc-notched-outline__leading
+                  .mdc-notched-outline__notch
+                    label.mdc-floating-label Message
+                  .mdc-notched-outline__trailing
+            footer.mdc-dialog__actions
+              button.mdc-button.mdc-button--raised.mdc-dialog__button(type="submit" data-mdc-dialog-action="Yes")
+                .mdc-button__ripple
+                span.mdc-button__label Send
+              button.mdc-button.mdc-dialog__button(type="button" data-mdc-dialog-action="No")
+                .mdc-button__ripple
+                span.mdc-button__label Cancel
+        .mdc-dialog__scrim
+
+    script(src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js")
+    script(src='/javascripts/layout.js')
+    block script
