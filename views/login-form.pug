@@ -1,16 +1,30 @@
 extends layout
 
 block content
-    h3 Login
     if errors
         for error in errors
             p=error.msg
     form(action="" method="post")
-        div
-            input#username(type="text" name="username" required value=username || '')
-            label(for="username") Username / Email
-        div
-            input#password(type="password" name="password" required)
-            label(for="password") Password
-        div
-            button(type="submit") Submit
+        .login-form
+            h3 Login
+            label#username.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type="text" name="username" required value=username)
+                .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                        span.mdc-floating-label Username / Email
+                    .mdc-notched-outline__trailing
+            label#password.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type="password" name="password" required)
+                .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                        span.mdc-floating-label Password
+                    .mdc-notched-outline__trailing
+            div
+                button.mdc-button.mdc-button--raised(type="submit")
+                    .mdc-button__ripple
+                    span.mdc-button__label Submit
+
+block script
+    script(src="/javascripts/login.js")

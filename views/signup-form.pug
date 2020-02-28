@@ -1,25 +1,53 @@
 extends layout
 
 block content
-    h3 Sign Up
     if errors
         for error in errors
-            p=error.msg
+            p(style="color:salmon")=error.msg
     form(action="" method="POST")
-        div
-            input#username(type="text" name="username" required value=username || '')
-            label(for="username") Username / Email
-        div
-            input#password(type="password" name="password" required)
-            label(for="password" type="password") Password
-        div
-            input#password_confirm(type="password" name="password_confirm" required)
-            label(for="password_confirm" type="password") Confirm password
-        div
-            input#fullname(type="text" name="fullname" required value=fullname || '')
-            label(for="fullname") Full Name
-        div 
-            input#admin(type="checkbox" name="admin" value='admin')
-            label(for="admin") Want to be an Admin?
-        div
-            button(type="submit") Submit
+        .signup-form
+            h3 Register
+            label#username.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type="text" name="username" required value=username)
+                .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                        span.mdc-floating-label Username / Email
+                    .mdc-notched-outline__trailing
+            label#password.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type="password" name="password" required)
+                .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                        span.mdc-floating-label Password
+                    .mdc-notched-outline__trailing
+            label#password_confirm.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type="password" name="password_confirm" required)
+                .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                        span.mdc-floating-label Password
+                    .mdc-notched-outline__trailing
+            label#fullname.mdc-text-field.mdc-text-field--outlined
+                input.mdc-text-field__input(type="text" name="fullname" required value=fullname)
+                .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                        span.mdc-floating-label Full Name
+                    .mdc-notched-outline__trailing
+            .mdc-form-field
+                .mdc-checkbox
+                    input#admin.mdc-checkbox__native-control(type="checkbox" name="admin" value='admin')
+                    .mdc-checkbox__background
+                        svg.mdc-checkbox__checkmark(viewBox="0 0 24 24")
+                            path.mdc-checkbox__checkmark-path(fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59")
+                        .mdc-checkbox__mixedmark
+                    .mdc-checkbox__ripple
+                label(for="admin") Want to be an Admin?
+            div
+                button.mdc-button.mdc-button--raised(type="submit")
+                    .mdc-button__ripple
+                    span.mdc-button__label Submit
+
+block script
+    script(src="/javascripts/signup.js")
