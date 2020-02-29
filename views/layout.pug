@@ -37,6 +37,7 @@ html
               i.mdc-list-item__graphic.material-icons(aria-hidden="true") logout
               span.mdc-list-item__text Register
 
+
     //- Main content (jumps to the side when main navigation opens)
     main.mdc-drawer-app-content
       //- Top app bar
@@ -50,7 +51,12 @@ html
       //- Main content
       main.main-content#main_content
         .mdc-top-app-bar--fixed-adjust
-          block content
+          .mdc-layout-grid
+            .mdc-layout-grid__inner
+              .mdc-layout-grid__cell.mdc-layout-grid__cell--span-8.mdc-layout-grid__cell--align-center
+                block content
+
+
       //- Message dialog
     form(action="/send-message" method="post")
       .mdc-dialog
