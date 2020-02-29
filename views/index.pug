@@ -7,6 +7,11 @@ block content
       | &nbsp or 
       a(href='/log-in') Login
       | &nbsp to create new messages
+  else
+    if !user.activeMember && user.role !== 'admin'
+      h3 Members can see who the author of a post is.
+      p To become a member go to &nbsp
+        a(href="/membership") Membership
 
   h2 Message board
   if user
