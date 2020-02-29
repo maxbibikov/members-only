@@ -7,6 +7,7 @@ const User = require('../models/user.js');
 
 exports.user_signup_get = (req, res) =>
   res.render('signup-form', { title: 'SignUp' });
+
 exports.user_signup_post = [
   check('fullname')
     .notEmpty()
@@ -17,13 +18,16 @@ exports.user_signup_post = [
     .trim()
     .escape(),
   check('username')
+    .isAlphanumeric()
+    .withMessage('Username can contain only letters and numbers')
     .notEmpty()
     .withMessage('Username should not be empty')
     .isLength({ min: 2, max: 20 })
     .withMessage('Username must be 2 to 20 characters long')
     .isString()
     .trim()
-    .escape(),
+    .escape()
+    .blacklist(' '),
   check('password')
     .notEmpty()
     .withMessage('Password hould not be empty')
