@@ -8,20 +8,24 @@ block content
             p #[strong=new Date(user.membership_end).toDateString()]
         else
             p Enter #[strong "secret string"] to get membership for 30 days
+            p Or just press 
+                button#set_secret_btn.mdc-button.mdc-button--outlined
+                    .mdc-button__ripple
+                    span.mdc-button__label Set secret string
+
+
             form(action="" method="post")
                 if errors
                     for error in errors
                         p(style="color: red")=error.msg
                 .membership-form
                     label#secret_string.mdc-text-field.mdc-text-field--outlined
-                        input.mdc-text-field__input(type="password" name="secret_string" value=secret_string required)
+                        input.mdc-text-field__input(type="text" name="secret_string" value=secret_string required)
                         .mdc-notched-outline
                             .mdc-notched-outline__leading
                             .mdc-notched-outline__notch
-                                span.mdc-floating-label Secret string
+                                span.mdc-floating-label secret string
                             .mdc-notched-outline__trailing
-                        //- label(for="secret_string") Enter secret string to become a member
-                        //- input#secret_string(type="password" name="secret_string" required)
                     div
                         button.mdc-button.mdc-button--raised(type="submit") 
                             .mdc-button__ripple
