@@ -32,7 +32,7 @@ block content
           p.mdc-typography--body1=message.text
       if user && user.role === 'admin'
         .mdc-card__actions
-          a.mdc-button.mdc-button--outlined.mdc-card__action(href=`${message.url}/delete` aria-pressed="false" aria-label="Delete")
+          button#delete_message_btn.mdc-button.mdc-button--outlined.mdc-card__action(data-value=`${message.url}/delete` aria-pressed="false" aria-label="Delete")
             //- i.material-icons.mdc-button__icon delete
             span.mdc-button__label Delete
             .mdc-button__ripple
@@ -50,6 +50,21 @@ block content
             .mdc-button__ripple
             span.mdc-button__label Register
 
+  //- Delete confirmation dialog
+  .mdc-dialog#delete_dialog
+    .mdc-dialog__container
+      .mdc-dialog__surface(role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content")
+        h2.mdc-dialog__title Delete message
+        .mdc-dialog__content
+          p Do you want to delete message?
+        footer.mdc-dialog__actions
+          button.mdc-button.mdc-dialog__button(data-mdc-dialog-action="close")
+            .mdc-button__ripple
+            span.mdc-button__label Cancel
+          button.mdc-button.mdc-dialog__button(data-mdc-dialog-action="accept")
+            .mdc-button__ripple
+            span.mdc-button__label Delete
+    .mdc-dialog__scrim
 
 block script
   script(src="/javascripts/index.js")

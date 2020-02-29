@@ -59,22 +59,24 @@ html
 
       //- Message dialog
     form(action="/send-message" method="post")
-      .mdc-dialog
+      .mdc-dialog#message_dialog
         .mdc-dialog__container
           .mdc-dialog__surface(role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content")
-            h2.mdc-dialog__title New Message
+            h2.mdc-dialog__title <!---->New Message<!---->
             .mdc-dialog__content
-              label#message_title.mdc-text-field.mdc-text-field--fullwidth
-                .mdc-text-field__ripple
-                input.mdc-text-field__input(type="text" aria-labelledby="my-label-id" placeholder="Title" name="title")
-                .mdc-line-ripple
-              label#message_text.mdc-text-field.mdc-text-field--fullwidth.mdc-text-field--textarea.message-textarea
-                textarea.mdc-text-field__input(rows="5" cols="20" aria-labelledby="my-label-id" name="text")
-                .mdc-notched-outline
-                  .mdc-notched-outline__leading
-                  .mdc-notched-outline__notch
-                    label.mdc-floating-label Message
-                  .mdc-notched-outline__trailing
+              .div
+                label#message_title.mdc-text-field(style="width: 100%")
+                  .mdc-text-field__ripple
+                  input.mdc-text-field__input(type="text" aria-labelledby="my-label-id" placeholder="Title" name="title")
+                  .mdc-line-ripple
+              .div
+                label#message_text.mdc-text-field.mdc-text-field--textarea.message-textarea(style="width: 100%")
+                  textarea.mdc-text-field__input(rows="5" cols="20" aria-labelledby="my-label-id" name="text")
+                  .mdc-notched-outline
+                    .mdc-notched-outline__leading
+                    .mdc-notched-outline__notch
+                      label.mdc-floating-label Message
+                    .mdc-notched-outline__trailing
             footer.mdc-dialog__actions
               button.mdc-button.mdc-button--raised.mdc-dialog__button(type="submit" data-mdc-dialog-action="Yes")
                 .mdc-button__ripple

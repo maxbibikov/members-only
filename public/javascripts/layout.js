@@ -74,16 +74,19 @@ function selectCurrentRoute() {
 }
 selectCurrentRoute();
 
-// New message dialog
-const dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
+// message dialog
+const messageDialogEl = document.querySelector('#message_dialog');
+if (messageDialogEl) {
+  const dialog = new mdc.dialog.MDCDialog(messageDialogEl);
 
-const messageBtnEl = document.querySelector('#message_btn');
-if (messageBtnEl) {
+  const messageBtnEl = document.querySelector('#message_btn');
+  if (messageBtnEl) {
     new mdc.ripple.MDCRipple(document.querySelector('.mdc-button'));
-  messageBtnEl.addEventListener('click', () => {
-    dialog.open();
-  });
+    messageBtnEl.addEventListener('click', () => {
+      dialog.open();
+    });
+  }
+  
+  new mdc.textField.MDCTextField(document.querySelector('#message_title'));
+  new mdc.textField.MDCTextField(document.querySelector('#message_text'));
 }
-
-new mdc.textField.MDCTextField(document.querySelector('#message_title'));
-new mdc.textField.MDCTextField(document.querySelector('#message_text'));
