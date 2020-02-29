@@ -18,18 +18,17 @@ block content
                 if errors
                     for error in errors
                         p(style="color: red")=error.msg
-                .membership-form
-                    label#secret_string.mdc-text-field.mdc-text-field--outlined
-                        input.mdc-text-field__input(type="text" name="secret_string" value=secret_string required)
-                        .mdc-notched-outline
-                            .mdc-notched-outline__leading
-                            .mdc-notched-outline__notch
-                                span.mdc-floating-label secret string
-                            .mdc-notched-outline__trailing
-                    div
-                        button.mdc-button.mdc-button--raised(type="submit") 
-                            .mdc-button__ripple
-                            span.mdc-button__label Submit
+                label#secret_string.secret-string-input.mdc-text-field.mdc-text-field--outlined
+                    input.mdc-text-field__input(type="text" name="secret_string" value=secret_string required)
+                    .mdc-notched-outline
+                        .mdc-notched-outline__leading
+                        .mdc-notched-outline__notch
+                            span.mdc-floating-label secret string
+                        .mdc-notched-outline__trailing
+                div
+                    button.mdc-button.mdc-button--raised(type="submit") 
+                        .mdc-button__ripple
+                        span.mdc-button__label Submit
 
 block script
     script(src="/javascripts/membership.js")
